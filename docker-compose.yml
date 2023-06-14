@@ -1,14 +1,14 @@
 version: '3'
 services:
-  app:
+  editor:
     build:
       context: .
-      dockerfile: Dockerfile
-    image: nada_docker
+      dockerfile: .docker/editor/Dockerfile
+    image: editor_web
     ports:
       - "127.0.0.1:8383:80"
     volumes:
-      - ./nada:/var/www/html/nada
+      - ./editor:/var/www/html/editor
     links:
       - mysql
     environment:
@@ -18,8 +18,10 @@ services:
       DB_PASSWORD: nada_password      
   mysql:
       image: mysql:5.7
-      container_name: mysql-57
+      #container_name: mysql-57
       restart: always
+      volumes:
+        - ./db_data:/var/lib/mysql
       ports:
         - 13306:3306
       environment:
